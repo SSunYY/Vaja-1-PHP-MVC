@@ -40,4 +40,42 @@ class articles_controller
     public function create(){
         require_once('views/articles/create.php');
     }
+
+    public function list(){
+        
+    }
+
+    public function edit(){
+
+    }
+
+
+
+    public function store(){
+        if(!isset($_POST['title']) || !isset($_POST['abstract']) || !isset($_POST['text'])){
+            return call('pages', 'error');
+        }
+
+        $title = $_POST['title'];
+        $abstract = $_POST['abstract'];
+        $text = $_POST['text'];
+        $user_id = $_SESSION['USER_ID'];
+
+        $db = Db::getInstance();
+        $query = "INSERT INTO articles (title, abstract, text, user_id) VALUES ('$title', '$abstract', '$text', '$user_id')";
+        if($db->query($query)){
+            header("Location: /articles/index");
+            die();
+        } else {
+            return call('pages', 'error');
+        }
+    }
+
+    public function delete(){
+
+    }
+
+    public function update(){
+        
+    }
 }
