@@ -96,7 +96,9 @@ class articles_controller
             return call('pages', 'error');
         }
 
-        if (Article::delete($_POST['id'])) {
+        $id = $_POST['id'];
+
+        if (Article::delete($id)) {
             header("Location: /articles/list");
             die();
         } else {
@@ -115,11 +117,12 @@ class articles_controller
             return call('pages', 'error');
         }
 
+        $id = $_POST['id'];
         $title = $_POST['title'];
         $abstract = $_POST['abstract'];
         $text = $_POST['text'];
 
-        if (Article::update($_POST['id'], $title, $abstract, $text)) {
+        if (Article::update($id, $title, $abstract, $text)) {
             header("Location: /articles/list");
             die();
         } else {
