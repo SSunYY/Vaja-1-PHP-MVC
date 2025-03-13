@@ -1,6 +1,6 @@
 <div class="container">
     <h3 class="mb-3">Objavi novico</h3>
-    <form action="post.php" method="POST">
+    <form action="/articles/store" method="POST">
         <div class="mb-3">
             <label for="title" class="form-label">Naslov</label>
             <input type="text" class="form-control" id="title" name="title" 
