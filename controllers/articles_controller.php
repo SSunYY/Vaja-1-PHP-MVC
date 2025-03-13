@@ -118,7 +118,7 @@ class articles_controller
         $abstract = $_POST['abstract'];
         $text = $_POST['text'];
 
-        if ($article->update($title, $abstract, $text)) {
+        if ($article->update($id, $title, $abstract, $text)) {
             header("Location: /articles/list");
             die();
         } else {
