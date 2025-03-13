@@ -91,10 +91,15 @@ class Article
         return $db->query($query);
     }
 
-    public static function update($id, $title, $abstract, $text){
+    public static function update($id, $title, $abstract, $text)
+    {
         $db = Db::getInstance();
+        $title = mysqli_real_escape_string($db, $title);
+        $abstract = mysqli_real_escape_string($db, $abstract);
+        $text = mysqli_real_escape_string($db, $text);
         $id = (int) $id;
-        $query = "UPDATE articles VALUES('$id', '$title', '$abstract', '$text') WHERE id = $id";
+
+        $query = "UPDATE articles SET title='$title', abstract='$abstract', text='$text' WHERE id=$id;";
         return $db->query($query);
     }
 }

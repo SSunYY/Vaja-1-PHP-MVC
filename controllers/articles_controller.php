@@ -85,17 +85,18 @@ class articles_controller
         }
     }
 
-    public function delete(){
-        if(!isset($_POST['id'])){
+    public function delete()
+    {
+        if (!isset($_POST['id'])) {
             return call('pages', 'error');
         }
 
         $article = Article::find($_POST['id']);
-        if(!$article || $article->user->id != $_SESSION['USER_ID']){
+        if (!$article || $article->user->id != $_SESSION['USER_ID']) {
             return call('pages', 'error');
         }
 
-        if($article->delete()){
+        if (Article::delete($_POST['id'])) {
             header("Location: /articles/list");
             die();
         } else {
@@ -118,7 +119,7 @@ class articles_controller
         $abstract = $_POST['abstract'];
         $text = $_POST['text'];
 
-        if ($article->update($id, $title, $abstract, $text)) {
+        if (Article::update($_POST['id'], $title, $abstract, $text)) {
             header("Location: /articles/list");
             die();
         } else {
