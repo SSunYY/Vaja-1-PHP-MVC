@@ -43,7 +43,8 @@ class articles_controller
 
     public function list(){
         if(!isset($_SESSION['USER_ID'])){
-            return call('pages', 'error');
+            header("Location: /auth/login");
+            exit();
         }
 
         $user_id = $_SESSION['USER_ID'];
@@ -52,7 +53,16 @@ class articles_controller
     }
 
     public function edit(){
+        if(!isset($_GET['id'])){
+            return call('pages', 'error');
+        }
 
+        $article = Article::find($_GET['id']);
+        if(!$article || $article->user->id != $_SESSION['USER_ID']){
+            return call('pages', 'error');
+        }
+
+        require_once('views/articles/edit.php');
     }
 
 
@@ -76,10 +86,43 @@ class articles_controller
     }
 
     public function delete(){
+        if(!isset($_POST['id'])){
+            return call('pages', 'error');
+        }
 
+        $article = Article::find($_POST['id']);
+        if(!$article || $article->user->id != $_SESSION['USER_ID']){
+            return call('pages', 'error');
+        }
+
+        if($article->delete()){
+            header("Location: /articles/list");
+            die();
+        } else {
+            return call('pages', 'error');
+        }
     }
 
-    public function update(){
-        
+    public function update()
+    {
+        if (!isset($_POST['id']) || !isset($_POST['title']) || !isset($_POST['abstract']) || !isset($_POST['text'])) {
+            return call('pages', 'error');
+        }
+
+        $article = Article::find($_POST['id']);
+        if (!$article || $article->user->id != $_SESSION['USER_ID']) {
+            return call('pages', 'error');
+        }
+
+        $title = $_POST['title'];
+        $abstract = $_POST['abstract'];
+        $text = $_POST['text'];
+
+        if ($article->update($title, $abstract, $text)) {
+            header("Location: /articles/list");
+            die();
+        } else {
+            return call('pages', 'error');
+        }
     }
 }

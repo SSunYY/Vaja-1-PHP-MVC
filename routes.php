@@ -25,9 +25,9 @@ function call($controller, $action)
 // definiramo tudi pravice (ustrezno zmanjšamo nabor akcij pod določenimi pogoji)
 $controllers = array(
   'pages' => ['error'],
-  'users' => ['create', 'store'],
-  'auth' => ['login', 'authenticate'],
-  'articles' => ['index', 'show']
+  'users' => ['create', 'store', 'edit', 'update'],
+  'auth' => ['login', 'authenticate', 'logout'],
+  'articles' => ['index', 'show', 'create', 'store', 'list', 'edit', 'update', 'delete']
 );
 // Če je prijavljen, mu dovolimo še urejanje profila, odjavo in objavo novic
 if(isset($_SESSION["USER_ID"])){

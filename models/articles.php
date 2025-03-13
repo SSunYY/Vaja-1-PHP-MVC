@@ -83,4 +83,18 @@ class Article
         }
         return $articles;
     }
+
+    public static function delete($id){
+        $db = Db::getInstance();
+        $id = (int) $id;
+        $query = "DELETE FROM articles WHERE id = $id";
+        return $db->query($query);
+    }
+
+    public static function update($id, $title, $abstract, $text){
+        $db = Db::getInstance();
+        $id = (int) $id;
+        $query = "UPDATE articles VALUES('$id', '$title', '$abstract', '$text') WHERE id = $id";
+        return $db->query($query);
+    }
 }
