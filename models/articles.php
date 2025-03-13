@@ -55,4 +55,32 @@ class Article
         }
         return null;
     }
+
+    public static function create($title, $abstract, $text, $user_id)
+    {
+        $db = Db::getInstance();
+        $title = mysqli_real_escape_string($db, $title);
+        $abstract = mysqli_real_escape_string($db, $abstract);
+        $text = mysqli_real_escape_string($db, $text);
+        $user_id = (int) $user_id;
+        $query = "INSERT INTO articles (title, abstract, text, user_id, date) VALUES ('$title', '$abstract', '$text', '$user_id', NOW());";
+    
+        if ($db->query($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function byUser($user_id){
+        $db = Db::getInstance();
+        $user_id = (int) $user_id;
+        $query = "SELECT * FROM articles WHERE user_id = $user_id";
+        $res = $db->query($query);
+        $articles = array();
+        while($article = $res->fetch_object()){
+            array_push($articles, new Article($article->id, $article->title, $article->abstract, $article->text, $article->date, $article->user_id));
+        }
+        return $articles;
+    }
 }

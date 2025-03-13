@@ -42,7 +42,13 @@ class articles_controller
     }
 
     public function list(){
-        
+        if(!isset($_SESSION['USER_ID'])){
+            return call('pages', 'error');
+        }
+
+        $user_id = $_SESSION['USER_ID'];
+        $articles = Article::byUser($user_id);
+        require_once('views/articles/list.php');
     }
 
     public function edit(){
@@ -61,9 +67,7 @@ class articles_controller
         $text = $_POST['text'];
         $user_id = $_SESSION['USER_ID'];
 
-        $db = Db::getInstance();
-        $query = "INSERT INTO articles (title, abstract, text, user_id) VALUES ('$title', '$abstract', '$text', '$user_id')";
-        if($db->query($query)){
+        if(Article::create($title, $abstract, $text, $user_id)){
             header("Location: /articles/index");
             die();
         } else {
