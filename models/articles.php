@@ -43,6 +43,7 @@ class Article
         return $articles;
     }
 
+    
     // Metoda, ki vrne eno novico z določenim id-jem iz baze
     public static function find($id)
     {
