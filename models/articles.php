@@ -43,7 +43,6 @@ class Article
         return $articles;
     }
 
-    
     // Metoda, ki vrne eno novico z določenim id-jem iz baze
     public static function find($id)
     {
@@ -85,6 +84,7 @@ class Article
         return $articles;
     }
 
+    //Funkcija za brisanje iz PB
     public static function delete($id){
         $db = Db::getInstance();
         $id = (int) $id;
